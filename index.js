@@ -1,19 +1,22 @@
-const fetch  = require("node-fetch");
-const express = require("express");
-const app = express();
-const expressHbs = require("express-handlebars");
-const hbs = require("hbs");
+import express from 'express';
 
-const getContent = async () => {
-    const url = `https://api.betting-api.com/1xbet/football/line/all?token=7f1d3664836d4fb1a295da5f9024771be7a441567eff414e8146533fe8c84665`;
-    // const additional_url = `/data/data.json`
+// handlebars
+import expressHbs from 'express-handlebars';
+import hbs from "hbs";
 
-    // const url = `http://localhost:3000/data/data.json`;
+// requests
+import getContent from './app/requests/api.betting.js'
 
-    const response = await fetch(url);
-    const data = await response.json();
-    return data; 
-}
+// ws
+// var expressWs = require('express-ws')(app);
+import expressWs from 'express-ws';
+
+// router
+// const router = express.Router()
+
+// const app = express();
+// const { app, getWss, applyTo } = expressWs(express());
+const app = expressWs(express()).app;
 
 app.engine("hbs", expressHbs.engine(
     {
@@ -34,7 +37,7 @@ app.engine("hbs", expressHbs.engine(
 ))
 app.set("view engine", "hbs");
 
-hbs.registerPartials(__dirname + "/views/partials");
+hbs.registerPartials("/views/partials");
 
 
 app.use(express.static('static'));
@@ -54,6 +57,12 @@ app.use("/spoons", function(request, response) {
     });
 })
 
+app.ws('/echo', function(ws, req) {
+    ws.on('message', function(msg) {
+      ws.send(msg);
+    });
+  });
+
 app.use("/", function(request, response) {
     getContent().then(info => {
         const data = info.filter(item => item.markets.totals.some(delta => {
@@ -69,5 +78,4 @@ app.use("/", function(request, response) {
 });
 
 
-
-app.listen(3000);
+app.listen(3000, () => console.log("work on 3000 port"));
