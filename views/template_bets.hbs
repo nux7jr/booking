@@ -1,0 +1,46 @@
+<main class="container">
+  <h1>Вилки</h1>
+  <div class="content">
+    <div class="row">
+      {{#if data}}
+      {{#each data}}
+      <div class="col-sm-6 pt-2">
+        <div class="card h-100">
+          <div class="card-body">
+            <a href={{this.href}} target="_blank" rel="noopener noreferrer">
+              <h5 class="card-title">{{this.title}}</h5>
+            </a>
+            <p class="card-text">{{this.team1_rus}} vs {{this.team2_rus}}</p>
+            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target=".an-{{this.id}}"
+              aria-expanded="false" aria-controls="all-{{this.id}}">
+              Посмотреть еще
+            </button>
+            <div class="collapse an-{{this.id}}" id="all-{{this.id}}">
+              <div class="card card-collapse card-body mt-3 overflow-auto">
+                {{#if this.markets.totals}}
+                {{#each this.markets.totals}}
+                <ul class="list-group mb-3 {{#is_profitable this.over.v this.under.v}}{{/is_profitable}}">
+                  <li class="list-group-item">Тип: {{this.type}}</li>
+                  <li class="list-group-item">Больше: {{this.over.v}}</li>
+                  <li class="list-group-item">Меньше: {{this.under.v}}</li>
+                </ul>
+                {{/each}}
+                {{else}}
+                <div class="alert alert-danger mt-2" role="alert">
+                  Ничего нету...
+                </div>
+                {{/if}}
+              </div>
+            </div>    
+          </div>
+        </div>
+      </div>
+      {{/each}}
+      {{else}}
+      <div class="alert alert-danger mt-2" role="alert">
+        Ничего нету...
+      </div>
+      {{/if}}
+    </div>
+  </div>
+</main>

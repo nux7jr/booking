@@ -1,0 +1,24 @@
+<header>
+  <nav>
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link d-flex justify-content-between align-items-center gap-2 {{#if active_home }} active {{/if}}" aria-current="page" href="/">
+        <span style="display: none;" class="spinner-border spinner-border-sm " role="status" aria-hidden="true"></span>
+        <span class="sr-only sm:d-1">Вилки</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link d-flex justify-content-between align-items-center gap-2 {{#if active_all }} active {{/if}}" href="/all">
+        <span style="display: none;" class="spinner-border spinner-border-sm " role="status" aria-hidden="true"></span>
+        <span class="sr-only">Всё</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link d-flex justify-content-between align-items-center gap-2 {{#if active_spoons }} active {{/if}}" href="/spoons">
+        <span style="display: none;" class="spinner-border spinner-border-sm " role="status" aria-hidden="true"></span>
+        <span class="sr-only">Что-то</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</header>
